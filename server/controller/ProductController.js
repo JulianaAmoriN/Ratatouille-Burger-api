@@ -1,49 +1,82 @@
-//  RETORNA LISTA DE TUDO
-const getProduct = (req, res) => {
-    res.send({
-        mensagem: 'Retorna lista de produtos'
-    });
-}
+const models = require("../db/models");
 
-//  INSERE UM PRODUTO
-const postProduct = (req, res) => {
-
-    // const product = {
-    //     name: req.body.name,
-    //     preco: req.body.preco
-    // };
-
-    res.send({
-        mensagem: 'O produto foi criado',
-        produtoCriado: product
-    });
+//  RETORNA LISTA DE TUDOS OS PRODUTOS
+const getProduct = async (req, res) => {
+    try {
+        const allProducts = await models.Product.findAll()
+        return res.status(200).json(allProducts)
+    } catch (error) {
+        res.json({
+            message: error.message
+        })
+    }
 }
 
 //  RETORNA PRODUTO ESPECIFICO
-const getProductId = (req, res) => {
-    const productid = req.params.productid
-    res.send({
-        mensagem: 'Detalhes do produto',
-        productid: productid
-    });
+const getProductId = async (req, res) => {
+    try {
+        const productid = req.params.productid
+        const product = await models.Product.findAll({
+            where: {
+              id: Number(productid)
+            }
+          })
+        return res.status(200).json(product)
+    } catch (error) {
+      res.json({
+        message: error.message
+      })
+    }
+}
+
+//  INSERE UM PRODUTO
+const postProduct = async (req, res) => {
+    try {
+        const productParams = req.body
+        const product =  await models.Product.create(productParams);
+        return res.status(201).json(product)
+    } catch (error) {
+      res.json({
+        message: error.message,
+      })
+    } 
 }
 
 //  ALTERA UM PRODUTO  
-const putProduct = (req, res) => {
-    const productid = req.params.productid
-    res.send({
-        mensagem: 'Produto alterado',
-        productid: productid
-    });
+const putProduct = async (req, res) => {
+    
+    try {
+        const productid = req.params.productid
+        const productParams = req.body
+        await models.Product.update(productParams, {
+          where: {
+            id: productid
+          }
+        })
+        res.status(200).send({
+          mensagem: 'Produto alterado'
+        })
+      } catch (err) {
+        console.log(err.message)
+      }
 }
 
 //  EXCLUI UM PRODUTO 
-const deleteProduct = (req, res) => {
-    const productid = req.params.productid
-    res.send({
-        mensagem: 'Produto excluído',
-        productid: productid
-    });
+const deleteProduct = async (req, res) => {
+    
+    try {
+        const productid = req.params.productid
+        await models.Product.destroy({
+            where: {
+            id: Number(productid)
+        }
+        });
+        return res.status(200).send({ mensagem: 'Produto apagado!' })
+    } catch (error) {
+        res.json({
+            message: error.message,
+        })
+    }
 }
 
 module.exports = { getProduct, postProduct, getProductId, putProduct, deleteProduct }
