@@ -55,8 +55,8 @@ const putUser = async (req, res) => {
     res.status(200).send({
       mensagem: 'User alterado com sucesso!'
     })
-  } catch (err) {
-    console.log(err.message)
+  } catch (error) {
+    console.log(error.message)
   }
 }
 
