@@ -8,10 +8,10 @@ const getOrder = (req, res) => {
   //  INSERE UM PEDIDO
   const postOrder = (req, res) => {
 
-    const order = {
-      id_produto: req.body.id_produto,
-      qtd: req.body.qtd
-    }
+    // const order = {
+    //   id_produto: req.body.id_produto,
+    //   qtd: req.body.qtd
+    // }
 
     res.send({
       mensagem: 'A ordem foi criada',

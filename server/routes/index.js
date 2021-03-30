@@ -6,9 +6,9 @@ const bodyParser = require('body-parser')
 const orderRouter = require('./OrderRouter');
 const productsRouter = require('./ProductsRouter');
 const userRouter  = require('./UserRouter');
-const { route } = require('./OrderRouter');
 
 router.use(morgan('dev'));
+
 router.use(bodyParser.urlencoded({extended: false})); //APENAS DADOS SIMPLES 
 router.use(bodyParser.json()); //JSON É A ENTRADA DO BODY
 

@@ -8,10 +8,10 @@ const getProduct = (req, res) => {
 //  INSERE UM PRODUTO
 const postProduct = (req, res) => {
 
-    const product = {
-        name: req.body.name,
-        preco: req.body.preco
-    };
+    // const product = {
+    //     name: req.body.name,
+    //     preco: req.body.preco
+    // };
 
     res.send({
         mensagem: 'O produto foi criado',
