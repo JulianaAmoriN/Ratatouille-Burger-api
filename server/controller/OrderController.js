@@ -3,7 +3,7 @@ const models = require("../db/models");
 //  RETORNA LISTA DE TUDO
 const getOrder = async (req, res) => {
   try {
-    const allOrders = await models.Order.findAll()
+    const allOrders = await models.Orders.findAll()
     return res.status(200).json(allOrders)
   } catch (error) {
     res.json({
@@ -17,7 +17,7 @@ const getOrderId = async (req, res) => {
 
   try {
     const orderid = req.params.orderid
-    const order = await models.Order.findAll({
+    const order = await models.Orders.findAll({
       where: {
         id: Number(orderid)
       }
@@ -34,7 +34,7 @@ const getOrderId = async (req, res) => {
 const postOrder = async(req, res) => {
   try {
     const orderParams = req.body
-    const order = await models.Order.create(orderParams);
+    const order = await models.Orders.create(orderParams);
     return res.status(200).json(order)
   } catch (error) {
     res.json({
@@ -48,7 +48,7 @@ const putOrder = async (req, res) => {
   try {
     const orderid = req.params.orderid
     const orderParams = req.body
-    await models.Order.update(orderParams, {
+    await models.Orders.update(orderParams, {
       where: {
         id: orderid
       }
@@ -65,7 +65,7 @@ const putOrder = async (req, res) => {
 const deleteOrder = async (req, res) => {
     try {
       const orderid = req.params.orderid
-      await models.Order.destroy({
+      await models.Orders.destroy({
         where: {
           id: Number(orderid)
         }
