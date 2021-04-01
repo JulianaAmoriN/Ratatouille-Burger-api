@@ -1,49 +1,92 @@
+const models = require("../db/models");
+
 //  RETORNA LISTA DE TUDO
-const getOrder = (req, res) => {
-    res.send({
-      mensagem: 'Retorna lista de oredens'
-    });
+const getOrder = async (req, res) => {
+  try {
+    const allOrders = await models.Order.findAll()
+    return res.status(200).json(allOrders)
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
   }
-  
-  //  INSERE UM PEDIDO
-  const postOrder = (req, res) => {
+}
 
-    // const order = {
-    //   id_produto: req.body.id_produto,
-    //   qtd: req.body.qtd
-    // }
+//  RETORNA PEDIDO ESPECIFICO
+const getOrderId = async (req, res) => {
 
-    res.send({
-      mensagem: 'A ordem foi criada',
-      orderCriada: order
-    });
-  }
-  
-  //  RETORNA PEDIDO ESPECIFICO
-  const getOrderId = (req, res) => {
+  try {
     const orderid = req.params.orderid
-    res.send({
-        mensagem: 'Detalhes da ordem', 
-        orderid: orderid
-    });
+    const order = await models.Order.findAll({
+      where: {
+        id: Number(orderid)
+      }
+    })
+    return res.status(200).json(order)
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
   }
-  
-  //  ALTERA UMA ORDEM 
-  const putOrder = (req, res) => {
+}
+
+//  INSERE UM PEDIDO
+const postOrder = async(req, res) => {
+  try {
+    const orderParams = req.body
+    const order = await models.Order.create(orderParams);
+    return res.status(200).json(order)
+  } catch (error) {
+    res.json({
+      message: error.message,
+    })
+  }
+}
+
+//  ALTERA UMA ORDEM 
+const putOrder = async (req, res) => {
+  try {
     const orderid = req.params.orderid
-    res.send({
-      mensagem: 'Ordem alterada', 
-      orderid: orderid
-    });
-  }
-  
-  //  EXCLUI UM PEDIDO
-  const deleteOrder = (req, res) => {
-    const orderid = req.params.orderid
-    res.send({
-      mensagem: 'Ordem excluída', 
-      orderid: orderid
-    });
-  }
-  
-  module.exports = { getOrder, postOrder, getOrderId, putOrder, deleteOrder }
+    const orderParams = req.body
+    await models.Order.update(orderParams, {
+      where: {
+        id: orderid
+      }
+    })
+    res.status(200).send({
+      mensagem: 'Ordem alterada'
+    })
+  } catch (error) {
+    console.log(error.message)
+  } 
+}
+
+//  EXCLUI UM PEDIDO
+const deleteOrder = async (req, res) => {
+    try {
+      const orderid = req.params.orderid
+      await models.Order.destroy({
+        where: {
+          id: Number(orderid)
+        }
+      });
+      return res.status(200).send({
+        mensagem: 'Ordem apagada!'
+      })
+    } catch (error) {
+      res.json({
+        message: error.message,
+      })
+    }
+}
+
+module.exports = {
+  getOrder, getOrderId, postOrder, putOrder, deleteOrder
+}
+
+// {
+// 	"user_id": 1,
+// 	"client_name": "Gastor",
+// 	"table":1,
+// 	"status":""
+// }

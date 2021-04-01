@@ -3,7 +3,7 @@ const models = require("../db/models");
 //  RETORNA LISTA DE TUDOS OS PRODUTOS
 const getProduct = async (req, res) => {
   try {
-    const allProducts = await models.Product.findAll()
+    const allProducts = await models.Products.findAll()
     return res.status(200).json(allProducts)
   } catch (error) {
     res.json({
@@ -16,7 +16,7 @@ const getProduct = async (req, res) => {
 const getProductId = async (req, res) => {
   try {
     const productid = req.params.productid
-    const product = await models.Product.findAll({
+    const product = await models.Products.findAll({
       where: {
         id: Number(productid)
       }
@@ -33,8 +33,8 @@ const getProductId = async (req, res) => {
 const postProduct = async (req, res) => {
   try {
     const productParams = req.body
-    const product = await models.Product.create(productParams);
-    return res.status(201).json(product)
+    const product = await models.Products.create(productParams);
+    return res.status(200).json(product)
   } catch (error) {
     res.json({
       message: error.message,
@@ -66,7 +66,7 @@ const deleteProduct = async (req, res) => {
 
   try {
     const productid = req.params.productid
-    await models.Product.destroy({
+    await models.Products.destroy({
       where: {
         id: Number(productid)
       }
@@ -82,3 +82,13 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = { getProduct, postProduct, getProductId, putProduct, deleteProduct }
+
+// {
+// 	"name":"Brigadeiro",
+// 	"price": 5.90,
+// 	"image": "",
+// 	"type":"Sobremesa",
+// 	"subtype":"",
+// 	"complement":"",
+// 	"flavor":""
+// }

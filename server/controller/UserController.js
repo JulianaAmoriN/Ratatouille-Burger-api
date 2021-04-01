@@ -34,7 +34,7 @@ const postUser = async (req, res) => {
   try {
     const userParams = req.body
     const user = await models.Users.create(userParams);
-    return res.status(201).json(user)
+    return res.status(200).json(user)
   } catch (error) {
     res.json({
       message: error.message,
@@ -80,3 +80,11 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = { getUser, postUser, getUserId, putUser, deleteUser }
+
+// {
+// 	"name":"ana",
+// 	"role":"cozinha",
+// 	"restaurant":"Bk",
+// 	"email":"ana@gmail.com",
+// 	"password":"1234567"
+// }

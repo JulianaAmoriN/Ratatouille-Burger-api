@@ -16,11 +16,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      restaurant: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      restaurant: {
+      password: {
         allowNull: false,
         type: Sequelize.STRING
       },
