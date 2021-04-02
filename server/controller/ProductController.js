@@ -48,7 +48,7 @@ const putProduct = async (req, res) => {
   try {
     const productid = req.params.productid
     const productParams = req.body
-    await models.Product.update(productParams, {
+    await models.Products.update(productParams, {
       where: {
         id: productid
       }

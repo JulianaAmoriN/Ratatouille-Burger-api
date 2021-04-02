@@ -14,10 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Orders.belongsTo(models.Users, {
         foreignKey: 'user_id'
       })
-      Orders.hasMany(models.ProductsOrders, {
-        onDelete: 'CASCADE',
-        foreignKey: 'order_id'
-      })
+      Orders.belongsToMany(models.Products, { 
+        through: 'ProductsOrders',
+        as: 'Products',
+        foreignKey: 'orderId',
+        onDelete: "CASCADE",
+        otherKey: 'productId'
+      });
     }
   };
   Orders.init({
